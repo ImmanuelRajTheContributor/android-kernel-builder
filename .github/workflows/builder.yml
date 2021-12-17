@@ -1,1 +1,22 @@
+name: Kernel Builder Environment
 
+on:
+  push:
+    branches: [ main ]
+    paths-ignore: 'README.md'
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Clone and build Kernel
+        run: |
+          git clone https://github.com/ImmanuelRajTheContributor/android-kernel-builder builder
+          cd builder
+          git clone https://github.com/iamimmanuelraj/kernel_xiaomi_jasmine_sprout kernel/jasmine_sprout
+          python3 -m build_kernel vendor/jasmine_sprout
